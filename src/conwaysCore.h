@@ -21,6 +21,8 @@ typedef struct TABLE_POINT
     int y;
 } POINT;
 
+extern int global_variable;
+
 void init_conway_table(C_TABLE* ctable);
 void free_conway_table(C_TABLE* ctable);
 bool is_cell_active(CELL cell);

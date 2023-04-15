@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include "conwaysCore.h"
 
 // Receive a pointer to a CONWAY TABLE. Prints the current state of the table.
 void show_table(C_TABLE* ctable)

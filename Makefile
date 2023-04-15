@@ -1,25 +1,47 @@
-# Define variables
-SOURCE_DIRECTORY = src
-BUILD_DIRECTORY = build
+# Makefile for Conways Game of Life
+
+# Compiler and compiler flags
 CC = gcc
 CFLAGS = -Wall -Werror
 
-# Define the list of source files
-SOURCES = $(wildcard $(SOURCE_DIRECTORY)/*.c)
-OBJECTS = $(patsubst $(SOURCE_DIRECTORY)/%.c, $(BUILD_DIRECTORY)/%.o, $(SOURCES))
+# Directories
+SRC_DIR = src
+BUILD_DIR = build
+BIN_DIR = bin
 
-# Define the build rules
-conways: $(OBJECTS)
-	$(CC) $(CFLAGS) -o $(BUILD_DIRECTORY)/$@ $^
+# Source files
+MAIN = $(SRC_DIR)/main.c
+CORE = $(SRC_DIR)/conwaysCore.c
+SURROUNDS = $(SRC_DIR)/conwaysSurrounds.c
+INTERFACE = $(SRC_DIR)/conwaysInterface.c
 
-$(BUILD_DIRECTORY)/%.o: $(SOURCE_DIRECTORY)/%.c $(SOURCE_DIRECTORY)/conways.h | $(BUILD_DIRECTORY)
-	$(CC) $(CFLAGS) -c -o $@ $<
+# Object files
+MAIN_OBJ = $(BUILD_DIR)/main.o
+CORE_OBJ = $(BUILD_DIR)/conwaysCore.o
+SURROUNDS_OBJ = $(BUILD_DIR)/conwaysSurrounds.o
+INTERFACE_OBJ = $(BUILD_DIR)/conwaysInterface.o
 
-$(BUILD_DIRECTORY):
-	mkdir -p $@
+# Output binary
+OUTPUT = $(BIN_DIR)/conways
 
-# Define the clean rule
+all: $(OUTPUT)
+
+$(OUTPUT): $(MAIN_OBJ) $(CORE_OBJ) $(SURROUNDS_OBJ) $(INTERFACE_OBJ)
+	$(CC) $(CFLAGS) -o $(OUTPUT) $(MAIN_OBJ) $(CORE_OBJ) $(SURROUNDS_OBJ) $(INTERFACE_OBJ)
+
+$(MAIN_OBJ): $(MAIN)
+	$(CC) $(CFLAGS) -c $(MAIN) -o $(MAIN_OBJ)
+
+$(CORE_OBJ): $(CORE)
+	$(CC) $(CFLAGS) -c $(CORE) -o $(CORE_OBJ)
+
+$(SURROUNDS_OBJ): $(SURROUNDS)
+	$(CC) $(CFLAGS) -c $(SURROUNDS) -o $(SURROUNDS_OBJ)
+
+$(INTERFACE_OBJ): $(INTERFACE)
+	$(CC) $(CFLAGS) -c $(INTERFACE) -o $(INTERFACE_OBJ)
+
 clean:
-	rm -rf $(BUILD_DIRECTORY)
+	rm -f $(BUILD_DIR)/*.o $(OUTPUT)
 
-.PHONY: clean
+.PHONY: clean all

@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
+int inited_table = 0;
+
 // Init the CONWAY TABLE
 void init_conway_table(C_TABLE* ctable)
 {
@@ -48,7 +50,7 @@ void free_conway_table(C_TABLE* ctable)
 
 bool is_cell_active(CELL cell)
 {
-    return cell.status ? false : true;
+    return (cell.status == 0) ? false : true;
 }
 
 void set_active(CELL* cell)
