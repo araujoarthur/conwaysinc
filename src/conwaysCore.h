@@ -1,5 +1,5 @@
-#ifndef CONWAYS_HEADER
-#define CONWAYS_HEADER
+#ifndef CONWAYS_CORE
+#define CONWAYS_CORE
 
 #include <stdbool.h>
 
@@ -23,9 +23,6 @@ typedef struct TABLE_POINT
 
 void init_conway_table(C_TABLE* ctable);
 void free_conway_table(C_TABLE* ctable);
-bool is_neighboor_populated(C_TABLE ctable, int x, int y);
-int populated_surrounds(C_TABLE ctable, int x, int y);
-void show_table(C_TABLE* ctable);
 bool is_cell_active(CELL cell);
 
 #endif

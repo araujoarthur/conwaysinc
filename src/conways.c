@@ -1,8 +1,11 @@
 #include <stdbool.h>
-#include "conway.h"
+#include <stdlib.h>
+#include <stdio.h>
+#include "conways.h"
 
 int inited_table = 0; // 0 not inited, 1 inited;
 
+// Init the CONWAY TABLE
 void init_conway_table(C_TABLE* ctable)
 {
     // If table is inited, can't re-init it before freeing.
@@ -15,7 +18,7 @@ void init_conway_table(C_TABLE* ctable)
     int max_y = ctable->max_y;
 
     ctable->table = malloc(max_x * sizeof(CELL*));
-    for (int x = 0; i < max_x; x++)
+    for (int x = 0; x < max_x; x++)
     {
         ctable->table[x] = malloc(max_y * sizeof(CELL));
         for (int y = 0; y < max_y; y++)
@@ -27,6 +30,7 @@ void init_conway_table(C_TABLE* ctable)
     inited_table = 1;
 }
 
+// Receive a pointer to a CONWAY TABLE and free the entire memory.
 void free_conway_table(C_TABLE* ctable)
 {
     // If table is not inited, can't free it.
@@ -68,7 +72,7 @@ bool is_neighboor_populated(C_TABLE ctable, int x, int y)
 /* Receives a CONWAY TABLE and a x,y point, returning the number of populated surrounds.*/
 int populated_surrounds(C_TABLE ctable, int x, int y)
 {
-    int populated, _X, _Y = 0;
+    int populated = 0, _X = 0, _Y = 0;
 
     for (_X = -1; _X <= 1; _X++)
     {
@@ -88,3 +92,25 @@ int populated_surrounds(C_TABLE ctable, int x, int y)
 
     return populated;
 }
+
+// Receive a pointer to a CONWAY TABLE. Prints the current state of the table.
+void show_table(C_TABLE* ctable)
+{
+    printf("\n");
+    for (int y = 0; y < ctable->max_y; y++)
+    {
+        for (int x = 0; x < ctable->max_x; x++)
+        {
+            printf("%c ", is_cell_active(ctable->table[x][y]) ? 'X' : 'O');
+        }
+        printf("\n");
+    }   
+}
+
+
+bool is_cell_active(CELL cell)
+{
+    return cell.status ? false : true;
+}
+
+void set_active(CELL* cell)

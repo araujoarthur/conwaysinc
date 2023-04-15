@@ -1,16 +1,25 @@
-SOURCE_DIRECTORY = ./src
-BUILD_DIRECTORY = ./build
+# Define variables
+SOURCE_DIRECTORY = src
+BUILD_DIRECTORY = build
 CC = gcc
 CFLAGS = -Wall -Werror
 
-conways: $(SOURCE_DIRECTORY)/main.o
-	$(CC) $(CFLAGS) -o $(BUILD_DIRECTORY)/conways $(SOURCE_DIRECTORY)/main.o
+# Define the list of source files
+SOURCES = $(wildcard $(SOURCE_DIRECTORY)/*.c)
+OBJECTS = $(patsubst $(SOURCE_DIRECTORY)/%.c, $(BUILD_DIRECTORY)/%.o, $(SOURCES))
 
-main.o: $(SOURCE_DIRECTORY)/main.c $(SOURCE_DIRECTORY)/conways.h
-	$(CC) $(CFLAGS) -c $(BUILD_DIRECTORY)/main.c
+# Define the build rules
+conways: $(OBJECTS)
+	$(CC) $(CFLAGS) -o $(BUILD_DIRECTORY)/$@ $^
 
+$(BUILD_DIRECTORY)/%.o: $(SOURCE_DIRECTORY)/%.c $(SOURCE_DIRECTORY)/conways.h | $(BUILD_DIRECTORY)
+	$(CC) $(CFLAGS) -c -o $@ $<
 
+$(BUILD_DIRECTORY):
+	mkdir -p $@
 
+# Define the clean rule
 clean:
 	rm -rf $(BUILD_DIRECTORY)
-	mkdir $(BUILD_DIRECTORY)
+
+.PHONY: clean
