@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "conways.h"
 
 #define MAX_OPTION_STRING 14
 
@@ -15,7 +16,7 @@ int main(int argc, char* argv[])
   {
     scanf("%s", usr_opt);
     strcpy(internal_opt, usr_opt);
-    
+
   }
 
   free(usr_opt);

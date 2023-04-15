@@ -11,10 +11,10 @@ typedef struct CONWAY_TABLE
 {
     int max_x;
     int max_y;
-    int* table; // is a [x][y] table after initiated 
+    CELL* table; // is a [x][y] table after initiated 
 } C_TABLE;
 
-void init_conway_table(CONWAY_TABLE* ctable);
-void free_conway_table(CONWAY_TABLE* ctable);
+void init_conway_table(C_TABLE* ctable);
+void free_conway_table(C_TABLE* ctable);
 
 #endif
