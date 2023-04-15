@@ -1,11 +1,15 @@
 SOURCE_DIRECTORY = ./src
 BUILD_DIRECTORY = ./build
+CC = gcc
+CFLAGS = -Wall -Werror
 
-.PHONY: clean conways
+conways: $(SOURCE_DIRECTORY)/main.o
+	$(CC) $(CFLAGS) -o $(BUILD_DIRECTORY)/conways $(SOURCE_DIRECTORY)/main.o
+
+main.o: $(SOURCE_DIRECTORY)/main.c $(SOURCE_DIRECTORY)/conways.h
+	$(CC) $(CFLAGS) -c $(BUILD_DIRECTORY)/main.c
 
 
-conways:
-	cc $(SOURCE_DIRECTORY)/main.c -o $(BUILD_DIRECTORY)/conways
 
 clean:
 	rm -rf $(BUILD_DIRECTORY)
